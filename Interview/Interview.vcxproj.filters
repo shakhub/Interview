@@ -36,15 +36,15 @@
     <ClCompile Include="amazonInterview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="hashtable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="binaryheap.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="binarySearchTree.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="includes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="linkedlist.hpp">
@@ -54,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stacks.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hashtable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

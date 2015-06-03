@@ -67,6 +67,7 @@
     <ClCompile Include="amazonInterview.cpp" />
     <ClCompile Include="binaryheap.cpp" />
     <ClCompile Include="binarySearchTree.cpp" />
+    <ClCompile Include="hashtable.cpp" />
     <ClCompile Include="linkedlist.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="queue.cpp" />
@@ -75,7 +76,7 @@
   <ItemGroup>
     <ClInclude Include="binaryheap.hpp" />
     <ClInclude Include="binarySearchTree.hpp" />
-    <ClInclude Include="includes.hpp" />
+    <ClInclude Include="hashtable.h" />
     <ClInclude Include="linkedlist.hpp" />
     <ClInclude Include="queue.hpp" />
     <ClInclude Include="stacks.hpp" />
