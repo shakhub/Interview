@@ -1,7 +1,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include"linkedlist.hpp"
-
+#if 1
 LinkedList *createList(int data)
 {
 	LinkedList *head = (LinkedList *)malloc(sizeof(LinkedList));
@@ -116,3 +116,35 @@ void runLinkedList(void)
 	pushToLinkList(&list, 9);
 	printList(&list);
 }
+#else // c++ code
+LinkedList::LinkedList()
+{
+	//constructor
+	
+}
+LinkedList::LinkedList(int data)
+{
+	//constructor
+	LinkedList *head = (LinkedList *)malloc(sizeof(LinkedList));
+	head->data = data;
+	head->next = NULL;
+}
+LinkedList *LinkedList::createNode(int data)
+{
+	LinkedList *head = new LinkedList;
+	return head;
+}
+void LinkedList::push(int data)
+{
+	//add a node to the head of a linked list
+	LinkedList *newNode = this;
+	newNode->next = *node; // new node will point to where the head used to point
+	*node = newNode;//move the head to point to the new node
+
+}
+void runLinkedList()
+{
+	LinkedList list();
+
+}
+#endif
