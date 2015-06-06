@@ -64,6 +64,7 @@ public:
 	int pop_tail();
 	int get_node_at_loc(int location);
 	void delete_node(int value);
+	void rotate_list(int k);
 	void print_list();
 
 	void reverse();// reverse the linked list

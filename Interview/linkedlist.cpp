@@ -3,6 +3,7 @@
 #include<iostream>
 #include"linkedlist.hpp"
 using namespace std;
+
 #if 0
 LinkedList *createList(int data)
 {
@@ -119,11 +120,11 @@ void runLinkedList(void)
 	printList(&list);
 }
 #else // c++ code
+
 LinkedList::LinkedList()
 {
 	//constructor
 	head = tail = NULL;
-	
 }
 LinkedList::LinkedList(int value)
 {
@@ -137,7 +138,7 @@ LinkedList::~LinkedList()
 }
 void LinkedList::deleteList()
 {
-	if(isEmpty()) {cout<< "Empty list"<<endl; return;}
+	if(isEmpty()) {cout<< "Empty list: Nothing to delete"<<endl; return;}
 	Node *curr = head;
 	Node *temp;
 
@@ -153,7 +154,7 @@ void LinkedList::deleteList()
 void LinkedList::push(int value)
 {
 	//add a node to the head of a linked list
-	if(head == NULL)
+	if (head == NULL)
 		tail = head = new Node(value);
 
 	Node * newNode = new Node(value);
@@ -171,7 +172,7 @@ void LinkedList::push(Node *node,int value)
 void LinkedList::push_at_tail(int value)
 {
 	if(head == NULL)
-		tail = head = new Node(value);
+		tail = head = new Node();
 
 	tail->next = new Node(value);
 	tail = tail->next;
@@ -182,10 +183,10 @@ int LinkedList::length()
 	if(isEmpty()) {cout << " Empty list "<<endl;return 0;}
 	Node *curr = head;
 	int len=0;
-	while(curr != NULL)
+	while(curr!= NULL)
 	{
 		curr = curr->next;
-		len++;
+		len++;		
 	}
 	cout << "Length of list : "<<len<<endl;
 	return len;
@@ -332,16 +333,52 @@ void LinkedList::reverse()
 	}
 	head = prev;
 	tail->next = NULL; //  not necessary just for safety
+	cout << "Reverse list " << endl;
 
+}
+void LinkedList::rotate_list(int k)
+{
+	/*
+	Rotate the link list counter-clock wise by k times.
+	Eg: 10->4->34->5->36->9 rotated by 3 should be
+	    5->36->9->10->4->34
+		For this we need to store (k+1)th node, last node and kth node
+	*/
+	if (isEmpty()) { cout << "Empty list: Nothing to rotate" << endl; return; }
+	k %= length(); // make sure that k is less than the length of the list
+	int count = 1;
+	Node *curr = head;
+	
+	while (count != k && curr!=NULL)
+	{
+		count++;
+		curr = curr->next;
+	}
+	
+
+	tail->next = head;
+	head = curr->next;
+	tail = curr;
+	tail->next = NULL;
+
+	cout << "List rotate counter-clock wise by " << k << endl;
+	
 }
 void runLinkedList()
 {
-	LinkedList list;
-	list.push(4);
+	LinkedList list(24);
+	list.push(9);
+	list.push(36);
 	list.push(5);
-	list.push(6);
-	list.push(7);
+	list.push(34);
+	list.push(4);
+	list.push(10);
+
 	list.print_list();	
+	list.rotate_list(10);
+	list.print_list();
+	list.reverse();
+	list.print_list();
 	
 }
 #endif
