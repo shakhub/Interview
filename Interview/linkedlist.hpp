@@ -1,4 +1,4 @@
-/*
+#if 0
 typedef struct LinkedList
 {
 	int data;
@@ -14,7 +14,7 @@ int removeLastNodeLinkList(LinkedList **);
 void deleteNode(LinkedList **, int );
 void printList(LinkedList **);
 
-*/
+#else
 class Node
 {
 	friend class LinkedList;
@@ -70,4 +70,5 @@ public:
 	void reverse();// reverse the linked list
 
 };
+#endif
 void runLinkedList(void);

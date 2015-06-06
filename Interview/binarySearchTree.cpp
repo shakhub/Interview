@@ -1,11 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include<iostream>
 #include "binarySearchTree.hpp"
 #include "queue.hpp"
 #include "stacks.hpp"
 #include "linkedlist.hpp"
 
 #define MAXROOT(x,y) ((x)>(y)?(x):(y))
+using namespace std;
 int isbst = 1;
 node *createNode(int data)
 {
@@ -265,17 +267,25 @@ void printRootToLeaf(node *rootPtr, LinkedList *list)
 	if (rootPtr == NULL) return;
 	if (rootPtr->left == NULL && rootPtr->right == NULL)
 	{
+		/*
 		pushToLinkList(&(list), rootPtr->data);//O(1)
 		printList(&(list));//O(n)
 		popLinkList(&(list));//O(1)
+		*/
+		list->push(rootPtr->data);
+		list->print_list();
+		list->pop();
+		
 		printf("\n");
 		return;
 	}
 	else
 	{
-		pushToLinkList(&(list), rootPtr->data);//O(1)
+		//pushToLinkList(&(list), rootPtr->data);//O(1)
+		list->push(rootPtr->data);
 		printRootToLeaf(rootPtr->left, (list));
 		printRootToLeaf(rootPtr->right,(list));
+		list->pop();
 	}
 }
 int isChildrenSumProperty(node *rootPtr)
@@ -346,7 +356,8 @@ void convertTreetoChildSumProp(node *rootPtr)
 void runBinaryTree(void)
 {
 	QueueLL *q = createQueueLL();
-	LinkedList *list = createList(0);
+	LinkedList list(0);
+	//LinkedList *list = createList(0);
 	node *root;
 	root = NULL;
 	//                                          6  
@@ -379,10 +390,11 @@ void runBinaryTree(void)
 	insertNode(&root, 9);
 	insertNode(&root, 8);
 
-	dfsInorder(&root);
-	printf("\n");
-	convertTreetoChildSumProp(root);
-	dfsInorder(&root);
+	dfsInorder(&root);	
+	cout << endl;
+	printRootToLeaf(root, &list);
+
+	
 }
 
 
