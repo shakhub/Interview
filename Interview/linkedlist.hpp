@@ -1,20 +1,6 @@
-#if 0
-typedef struct LinkedList
-{
-	int data;
-	struct LinkedList *next;
-}LinkedList;
+#ifndef __LINKEDLIST_H
+#define __LINKEDLIST_H
 
-LinkedList *createList(int );
-void pushToLinkList(LinkedList **, int );
-void pushToLinkListAt(LinkedList *, int );
-void pushToLinkListAtEnd(LinkedList **, int );
-int popLinkList(LinkedList **);
-int removeLastNodeLinkList(LinkedList **);
-void deleteNode(LinkedList **, int );
-void printList(LinkedList **);
-
-#else
 class Node
 {
 	friend class LinkedList;
@@ -62,7 +48,7 @@ public:
 	void push_at_tail(int value);
 	int pop();
 	int pop_tail();
-	int get_node_at_loc(int location);
+	int get_node_at_loc(unsigned int location);
 	void delete_node(int value);
 	void rotate_list(int k);
 	void print_list();
@@ -70,5 +56,5 @@ public:
 	void reverse();// reverse the linked list
 
 };
-#endif
 void runLinkedList(void);
+#endif// __LINKEDLIST_H
