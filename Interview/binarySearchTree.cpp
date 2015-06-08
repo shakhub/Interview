@@ -106,31 +106,26 @@ void bfsSpiralTravel(node *rootPtr)
 	// try to implement using double ended queues
 	// this algorithm uses two stacks in an iterative approach
 	// one stack is used for left to right printing and the other for right to left
-	Stack *s1, *s2;
-
-	s1 = createStack(10);
-	s2 = createStack(10);
-
-	pushToStack(s1, (int)rootPtr);
-
-	while (!isStackEmpty(s1) || !isStackEmpty(s2))
+	
+	Stack s1(10),s2(10);
+	s1.push((int)rootPtr);
+	while (!s1.isEmpty() || !s2.isEmpty())
 	{
-		while (!isStackEmpty(s1))
+		while (!s1.isEmpty())
 		{
-			node * current = (node*)popFromStack(s1);
+			node * current = (node*)s1.pop();
 			printf("%d ", current->data);
-			if (current->right != NULL) pushToStack(s2, (int)current->right);
-			if (current->left != NULL) pushToStack(s2, (int)current->left);
+			if (current->right != NULL) s2.push((int)current->right);
+			if (current->left != NULL) s2.push((int)current->left);
 		}
-		while (!isStackEmpty(s2))
+		while (!s2.isEmpty())
 		{
-			node * current = (node*)popFromStack(s2);
+			node * current = (node*)s2.pop();
 			printf("%d ", current->data);
-			if (current->left != NULL) pushToStack(s1, (int)current->left);
-			if (current->right != NULL) pushToStack(s1, (int)current->right);
+			if (current->left != NULL) s1.push( (int)current->left);
+			if (current->right != NULL) s1.push((int)current->right);
 		}
 	}
-
 }
 void dfsPreorder(node **rootPtr)
 {
@@ -150,7 +145,7 @@ void dfsInorder(node **rootPtr)
 }
 void dfsInorderIterative(node *rootPtr)
 {
-	Stack *stack = createStack(20);
+	Stack stack(20);
 	node *current = rootPtr;
 	int done = 0;
 	if (current == NULL) return;
@@ -159,15 +154,15 @@ void dfsInorderIterative(node *rootPtr)
 	{
 		if (current != NULL)
 		{
-			pushToStack(stack, (int)current);
+			stack.push((int)current);
 			current = current->left;
 		}
 
 		else
 		{
-			if (!isStackEmpty(stack))
+			if (!stack.isEmpty())
 			{
-				current = (node *)popFromStack(stack);
+				current = (node *)stack.pop();
 				printf("%d ", current->data);
 				current = current->right;
 
@@ -176,7 +171,6 @@ void dfsInorderIterative(node *rootPtr)
 				done = 1;
 		}
 	}
-
 }
 void isBST(node **rootPtr)
 {
@@ -267,11 +261,6 @@ void printRootToLeaf(node *rootPtr, LinkedList *list)
 	if (rootPtr == NULL) return;
 	if (rootPtr->left == NULL && rootPtr->right == NULL)
 	{
-		/*
-		pushToLinkList(&(list), rootPtr->data);//O(1)
-		printList(&(list));//O(n)
-		popLinkList(&(list));//O(1)
-		*/
 		list->push(rootPtr->data);
 		list->print_list();
 		list->pop();
@@ -358,7 +347,6 @@ void runBinaryTree(void)
 {
 	QueueLL *q = createQueueLL();
 	LinkedList list;
-	//LinkedList *list = createList(0);
 	node *root;
 	root = NULL;
 	//                                          6  
@@ -392,6 +380,8 @@ void runBinaryTree(void)
 	insertNode(&root, 8);
 
 	dfsInorder(&root);	
+	cout<<endl;
+	bfsSpiralTravel(root);
 	cout << endl;
 	printRootToLeaf(root, &list);
 
