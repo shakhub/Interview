@@ -278,6 +278,7 @@ void printRootToLeaf(node *rootPtr, LinkedList *list)
 		
 		printf("\n");
 		return;
+
 	}
 	else
 	{
@@ -356,7 +357,7 @@ void convertTreetoChildSumProp(node *rootPtr)
 void runBinaryTree(void)
 {
 	QueueLL *q = createQueueLL();
-	LinkedList list(0);
+	LinkedList list;
 	//LinkedList *list = createList(0);
 	node *root;
 	root = NULL;
