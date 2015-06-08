@@ -1,152 +1,115 @@
+#include<iostream>
 #include<stdio.h>
 #include<stdlib.h>
 #include"queue.hpp"
 
-/*Queue using arrays*/
+#define _QUEUE
+using namespace std;
 
-//create a queue
-Queue *createQueue(int capacity)
+Queue::Queue()
 {
-	Queue *queue = (Queue*)malloc(sizeof(Queue));
-
-	queue->capacity = capacity;
-	queue->front = queue->rear = -1;
-	queue->size = 0;
-	queue->array = (int*)malloc(capacity*sizeof(int));
-	
-	return queue;
+	front = rear =-1;
+	size = 0;
+	capacity = 0;
 }
-int isEmptyQueue(Queue *queue)
+Queue::Queue(int capacity)
 {
-	return (queue->size == 0);
+	front = rear =-1;
+	size = 0;
+	this->capacity = capacity;
+	array = new int[capacity];
 }
-int isFullQueue(Queue *queue)
+Queue::~Queue()
 {
-	return (queue->size == queue->capacity);
+	front = rear = 0;
+	size = 0;
+	capacity = 0;
+	delete[] array;
 }
-void enqueue(Queue *queue, int data)
+void Queue::enqueue(int data)
 {
-	// to add an element into a queue
-	if (isFullQueue(queue)) return;
-	queue->front = (queue->front == -1) ? 0 : queue->front;
-	queue->rear = (queue->rear + 1) % queue->capacity;
-	queue->array[queue->rear] = data;
-	queue->size = queue->size + 1;
-
-}
-void insertFrontQueue(Queue *queue, int data)
-{
-	// this is for double ended queue (dequeue)
-	if(isFullQueue(queue)) return;
-	queue->front = (queue->front == -1) ? 0 : queue->front;
-	queue->front = (queue->front - 1) % queue->capacity;
-	queue->array[queue->front] = data;
-	queue->size = queue->size + 1;
-
-}
-int dequeue(Queue *queue)
-{
-	// to remove an element from the queue
-	int data;
-	if (isEmptyQueue(queue)) return ERROR_QUEUE_EMPTY;
-	data = queue->array[queue->front];
-	queue->front = (queue->front + 1) % queue->capacity;
-	queue->size = queue->size - 1;
-
-	return data;
-}
-int removeRearQueue(Queue *queue)
-{
-	// this is for double ended queue
-	int data;
-	if (isEmptyQueue(queue)) return ERROR_QUEUE_EMPTY;
-	data = queue->array[queue->rear];
-	queue->rear = (queue->rear - 1) % queue->capacity;
-	queue->size = queue->size - 1;
-
-	return data;
-}
-/*Queue using linked list*/
-
-Qnode *createQNode(int data)
-{
-	//create a node for the queue 
-
-	Qnode *qnode = (Qnode*)malloc(sizeof(Qnode));
-	qnode->data = data;
-	qnode->next = NULL;
-
-	return qnode;
-}
-QueueLL *createQueueLL(void)
-{
-	//create a queue
-	QueueLL *queue = (QueueLL*)malloc(sizeof(QueueLL));
-	queue->front = queue->rear = NULL;
-
-	return queue;
-}
-void enqueueLL(QueueLL *queue, int data)
-{
-	// to add an element into the queue
-	// This adds the new node at the end of the list.
-	Qnode *qnode = createQNode(data);
-	if (queue->rear == NULL)
+	if(isFull())
 	{
-		queue->front = queue->rear = qnode;
+		cout << "Error: Queue is full" << endl;
 		return;
 	}
-	queue->rear->next = qnode;
-	queue->rear = qnode; // replace the new node as the rear node in thw queue
+	front = (front==-1)? 0 : front; 
+	rear = (rear+1)%capacity;
+	size++;
+	array[rear] = data;
 }
-void insertFrontQueueLL(QueueLL *queue, int data)
+void Queue::append(int data)
 {
-	// this is for the double ended queue 
-	// This adds the new node at the front of the queue.
-	Qnode *qnode = createQNode(data);
-	if (queue->front == NULL)
+	if(isFull())
 	{
-		queue->front = queue->rear = qnode;
+		cout << "Error: Queue is full" << endl;
 		return;
 	}
-
-	queue->front->next = qnode;
-	queue->front = qnode;
-}
-Qnode *dequeueLL(QueueLL *queue)
-{
-	// to remove an element from the queue
-	// This removes the node at the head, ie at the front of the queue.
-	Qnode *temp;
-
-	if (queue == NULL) return NULL;
-	temp = queue->front;
-	queue->front = queue->front->next;
-
-	if (queue->front == NULL)
-		queue->rear = NULL;
-
-	return temp;
-}
-/*
-Qnode *removeRearQueueLL(QueueLL *queue)
-{
-	// this is for the double ended queue
-	// this removes the node at the end of the list , ie at the rear of the queue
 	
+	front = (front==-1)? 0 : front;
+	front = front>0? front-1:capacity-front-1; 
+	size++;
+	array[front] = data;
+
 }
-*/
-void runqueue(void)
+int Queue::dequeue()
 {
-	int i = 0;
-	Queue *q = createQueue(6);
-	enqueue(q, 3);
-	enqueue(q, 4);
-	enqueue(q, 5);
-	enqueue(q, 6);
-	enqueue(q, 7);
-	printf("%d\n", removeRearQueue(q));
-	printf("%d\n", removeRearQueue(q));
-	insertFrontQueue(q, 20);
-	printf("%d\n", dequeue(q));
+	int data;
+	if(isEmpty())
+	{
+		cout << "Error: Queue is empty."<<endl;
+		return ERROR_QUEUE_EMPTY;
+	}
+	size--;
+	data = array[front];
+	front = (front+1)%capacity;
+	return data;
+}
+int Queue::dequeue_rear()
+{
+	int data;
+	if(isEmpty())
+	{
+		cout << "Error: Queue is empty."<<endl;
+		return ERROR_QUEUE_EMPTY;
+	}
+	size--;
+	data = array[rear];
+	rear = (rear-1)%capacity;
+	return data;
+}
+
+void Queue::print()
+{
+	if(isEmpty())
+	{
+		cout << "Error: Queue is empty."<<endl;
+		return ;
+	}
+	cout<< "Queue :";
+	for(int i = 0;i<size;i++)
+	{
+
+		cout << array[(i+front)%capacity]<< " " ;
+	}
+	cout<<endl;
+}
+
+
+void runQueue(void)
+{
+
+	Queue q(10);
+	q.enqueue(3);
+	q.enqueue(4);
+	q.enqueue(5);
+	q.enqueue(6);
+	q.enqueue(7);
+	q.enqueue(8);
+	
+	q.print();
+	q.append(45);
+	q.print();
+	cout << q.dequeue()<<endl;
+	q.print();
 }
