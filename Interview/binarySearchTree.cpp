@@ -87,18 +87,17 @@ int findHeight(node **rootPtr)
 }
 void breathFirstSeachTravel(node **rootPtr)
 {
-	QueueLL *q = createQueueLL();
-	if (*rootPtr == NULL) return;
-	enqueueLL(q, (int)(*rootPtr));
-	while (q->front != NULL && q->rear != NULL)
+	Queue q(100);
+	if(*rootPtr == NULL) return;
+	q.enqueue((int)(*rootPtr));
+	while(!q.isEmpty())
 	{
-		node *current = (node*) (dequeueLL(q)->data); // store the address of the dequeued node 
-		printf("%d\n",current->data);
-		if (current->left !=NULL) enqueueLL(q, (int)(current)->left); // enqueue the address of the left child
-		if (current->right != NULL) enqueueLL(q, (int)(current)->right); // enqueue the address of the right child
-
-	}	
-	
+		node *current = (node*) (q.dequeue()); // store the address of the dequeued node 
+		cout<< current->data << " ";
+		if (current->left !=NULL) q.enqueue( (int)(current)->left); // enqueue the address of the left child
+		if (current->right != NULL) q.enqueue((int)(current)->right); // enqueue the address of the right child
+		
+	}
 }
 void bfsSpiralTravel(node *rootPtr)
 {
@@ -345,8 +344,6 @@ void convertTreetoChildSumProp(node *rootPtr)
 }
 void runBinaryTree(void)
 {
-	QueueLL *q = createQueueLL();
-	LinkedList list;
 	node *root;
 	root = NULL;
 	//                                          6  
@@ -378,12 +375,11 @@ void runBinaryTree(void)
 	insertNode(&root, 3);
 	insertNode(&root, 9);
 	insertNode(&root, 8);
-
-	dfsInorder(&root);	
+	breathFirstSeachTravel(&root);
 	cout<<endl;
-	bfsSpiralTravel(root);
-	cout << endl;
-	printRootToLeaf(root, &list);
+	
+	
+	
 
 	
 }
