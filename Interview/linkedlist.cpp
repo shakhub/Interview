@@ -149,13 +149,16 @@ void LinkedList::deleteList()
 		delete temp;
 	}
 	head = tail = NULL;
-	cout << "List deleted"<<endl;
+	//cout << "List deleted"<<endl;
 }
 void LinkedList::push(int value)
 {
 	//add a node to the head of a linked list
 	if (head == NULL)
+	{
 		tail = head = new Node(value);
+		return;
+	}
 
 	Node * newNode = new Node(value);
 	newNode->next = head;
@@ -172,17 +175,20 @@ void LinkedList::push(Node *node,int value)
 void LinkedList::push_at_tail(int value)
 {
 	if(head == NULL)
-		tail = head = new Node();
+	{
+		tail = head = new Node(value);
+		return;
+	}
 
 	tail->next = new Node(value);
 	tail = tail->next;
 	
 }
-int LinkedList::length()
+unsigned int LinkedList::length()
 {
 	if(isEmpty()) {cout << " Empty list "<<endl;return 0;}
 	Node *curr = head;
-	int len=0;
+	unsigned int len=0;
 	while(curr!= NULL)
 	{
 		curr = curr->next;
@@ -370,7 +376,8 @@ void LinkedList::rotate_list(int k)
 }
 void runLinkedList()
 {
-	LinkedList list(24);
+	//LinkedList list(24);
+	LinkedList list;
 	list.push(9);
 	list.push(36);
 	list.push(5);

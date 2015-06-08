@@ -54,7 +54,7 @@ public:
 		}
 		return false;
 	}
-	int length();
+	unsigned int length();
 	int search(int value); // returns the location of the value if found
 	void deleteList();
 	void push(int value);
