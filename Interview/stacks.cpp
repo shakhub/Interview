@@ -1,109 +1,94 @@
-
+#include<iostream>
 #include<stdio.h>
 #include<stdlib.h>
 #include "stacks.hpp"
 
 #define __STACKS
-
-// stack using array
-Stack *createStack(int capacity)
+using namespace std;
+Stack::Stack()
 {
-	Stack *stack = (Stack*)malloc(sizeof(Stack));
-	stack->top = -1;
-	stack->capacity = capacity;
-	stack->array = (int*)malloc(capacity*sizeof(int));
-	return stack;
+	//constructor
+	capacity = 0;
+	top = -1;
 }
-int isStackEmpty(Stack *stack)
+Stack::Stack(int capacity)
 {
-	return stack->top == -1;
+	this->capacity = capacity;
+	top = -1;
+	array = new int[capacity];
 }
-int isStackFull(Stack *stack)
+Stack::~Stack()
 {
-	return stack->top == stack->capacity - 1;
-}
-void pushToStack(Stack *stack, int data) 
-{
-	if (isStackFull(stack)) return;
-	stack->array[++stack->top] = data;
+	delete[] array;
 }
 
-int popFromStack(Stack *stack)
+void Stack::push(int data)
 {
-	if (isStackEmpty(stack)) return ERROR_STACK_EMPTY;
-	return stack->array[stack->top--];
+	if(isFull()) 
+	{
+		cout << " Error : Stack is full. Push unsuccessful"<<endl;
+		return;
+	}
+	array[++top] = data;
 }
-//stack using linked lists
-StackLL *createStackLL(int data)
-{
-	StackLL *stack = (StackLL *)malloc(sizeof(StackLL));
-	stack->data = data;
-	stack->next = NULL;
-	return stack;
-}
-int isStackLLEmpty(StackLL *stack)
-{
-	return stack == NULL;
-}
-void pushToStackLL(StackLL **stack, int data)
-{
-	StackLL *newNode = createStackLL(data);
-	newNode->next = *stack; // the new node will point to where the head was pointing
-	*stack = newNode; // the head will point to the new node
-}
-int popFromStackLL(StackLL **stack)
-{
-	int pop;
-	StackLL *temp = *stack;
-	if (isStackLLEmpty(*stack)) return ERROR_STACK_EMPTY;
-	pop = temp->data;
-	*stack = (*stack)->next;
-	free(temp);
-	return pop;
-
-}
-
-//algorithms
-void printStack(Stack *stack)
-{
-	while (!isStackEmpty(stack))
-		printf("%d\n", popFromStack(stack));
-}
-void insertFromBottom(Stack *stack, int data)
+void Stack::append(int data)
 {
 	int temp;
-	if (isStackEmpty(stack))
-		pushToStack(stack, data);
+	if(isEmpty())
+		push(data);
 	else
 	{
-		temp = popFromStack(stack);
-		insertFromBottom(stack, data);
-		pushToStack(stack, temp);
-
+		temp = pop();
+		append(data);
+		push(temp);
 	}
+
 }
-void reverseStack(Stack *stack)
+void Stack::print()
+{
+	if(isEmpty())
+	{
+		cout << " Error : Stack is empty.Nothing to print"<<endl;
+		return ;
+	}
+	cout << "Stack :";
+	for(int i=0;i<=top;i++)
+		cout<< array[i] <<" ";
+	cout<<endl;
+}
+int Stack::pop()
+{
+	if(isEmpty()) 
+	{
+		cout << " Error : Stack is empty.Pop unsuccessful"<<endl;
+		return ERROR_STACK_EMPTY;
+	}
+	//cout << "Pop value :" << array[top]<<endl;
+	return array[top--];
+}
+void Stack::reverse()
 {
 	int temp;
-	if (!isStackEmpty(stack))
+	if(!isEmpty())
 	{
-		temp = popFromStack(stack);
-		reverseStack(stack);
-		insertFromBottom(stack, temp);
+		temp = pop();
+		reverse();
+		append(temp);
 	}
 }
 
 //main calling function
 void runStack(void)
 {
-	Stack *s = createStack(4);
-	pushToStack(s, 4);
-	pushToStack(s, 3);
-	pushToStack(s, 2);
-	pushToStack(s, 1);
-
-
-	reverseStack(s);
-	printStack(s);
-	system("PAUSE");
+	Stack s(40);
+	s.push(3);
+	s.push(4);
+	s.push(6);
+	s.push(78);
+	s.push(34);
+	s.print();
+	s.pop();
+	s.print();
+	s.reverse();
+	s.print();
 }
