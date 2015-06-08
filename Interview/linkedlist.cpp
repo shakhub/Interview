@@ -188,7 +188,7 @@ int LinkedList::length()
 		curr = curr->next;
 		len++;		
 	}
-	cout << "Length of list : "<<len<<endl;
+	//cout << "Length of list : "<<len<<endl;
 	return len;
 }
 int LinkedList::search(int value)
@@ -267,8 +267,12 @@ int LinkedList::get_node_at_loc(int idx)
 		curr = curr->next;
 		count++;
 	}
+	if (curr == NULL)
+	{
+		return -1;
+	}
 	
-	cout << "Data at location "<<idx<<": "<<curr->data<<endl;
+	//cout << "Data at location "<<idx<<": "<<curr->data<<endl;
 	return curr->data;
 }
 void LinkedList::delete_node(int value)
