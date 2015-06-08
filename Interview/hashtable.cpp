@@ -1,18 +1,24 @@
 #include<iostream>
 #include"hashtable.h"
-#include"linkedlist.hpp"
+
 
 using namespace std;
 #define HASHTABLE
 #define HASHTABLE_SIZE 100
-LinkedList list1;
-LinkedList list2;
+
+
 HashTable::HashTable(int arrSize)
 {
 	//constructor
 	size = arrSize;
 	table = new int[size];
 	fill(table,table+size,0);
+
+}
+HashTable::~HashTable()
+{
+	size = 0;
+	delete[] table;
 
 }
 void HashTable::hash(int *array,int size)
@@ -34,12 +40,12 @@ void HashTable::hash(int *array,int size)
 	}
 
 }
-void HashTable::hash()
+void HashTable::hash(LinkedList *list1)
 {
-	int cnt = list1.length();
+	int cnt = list1->length();
 	while(cnt)
 	{
-		int key = list1.get_node_at_loc(cnt);
+		int key = list1->get_node_at_loc(cnt);
 		if(table[key]==0)
 		{
 			//check if the location is used or not
@@ -118,7 +124,8 @@ static void uiLinkedList(void)
 	//Given two linked lists, create union and intersection lists
 	// that contain union and intersection fo the elements in the
 	// given lists. Order of elements in output doesn't matter.
-	
+	LinkedList list1;
+	LinkedList list2;
 	HashTable h(HASHTABLE_SIZE);
 	list1.push(10);
 	list1.push(15);
@@ -130,7 +137,7 @@ static void uiLinkedList(void)
 	list2.push(2);
 	list2.push(10);
 
-	h.hash();
+	h.hash(&list1);
 	h.setSize(10); //  set the table size more than the number of data in the table
 	cout << "List 1 : ";
 	list1.print_list();
