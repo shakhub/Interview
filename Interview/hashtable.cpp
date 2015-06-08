@@ -5,8 +5,8 @@
 using namespace std;
 #define HASHTABLE
 #define HASHTABLE_SIZE 100
-LinkedList list1(10);
-LinkedList list2(8);
+LinkedList list1;
+LinkedList list2;
 HashTable::HashTable(int arrSize)
 {
 	//constructor
@@ -80,68 +80,38 @@ void subsetArray(void)
 }
 static void findUnion(LinkedList *head1,LinkedList *head2,HashTable *h)
 {
-	/*
-	LinkedList *list1 = *head1;
-	LinkedList *list2 = *head2;
-	LinkedList *unionList = createList(NULL); // use getLength from linkedlist
+	unsigned int cnt1 = head1->length(), cnt2 = head2->length();
+	LinkedList unionList; // use getLength from linkedlist
 
-	while(list1!=NULL){
-		pushToLinkList(&unionList,list1->data);
-		list1=list1->next;
-	}
-	while(list2!=NULL)
-	{
-		int data = list2->data;
-		if(!h->isPresent(data))
-			pushToLinkList(&unionList,data);
-		list2=list2->next;
-	}
-	printList(&unionList);
-	*/
-	int cnt1 = head1->length(), cnt2 = head2->length();
-	LinkedList unionList(0); // use getLength from linkedlist
-
-	while (cnt1){
+	while (cnt1>0){
 		unionList.push_at_tail(head1->get_node_at_loc(cnt1));
 		cnt1--;
 	}
-	while (cnt2)
+	while (cnt2>0)
 	{
 		int data = head2->get_node_at_loc(cnt2);
 		if (!h->isPresent(data))
 			unionList.push_at_tail(data);
 		cnt2--;
 	}
+	cout << "Union of the lists "<<endl;
 	unionList.print_list();
-
-
+	cout<<endl;
 }
 static void findIntersection(LinkedList *head1,LinkedList *head2,HashTable *h)
 {
-	/*
-	LinkedList *list1 = *head1;
-	LinkedList *list2 = *head2;
-	LinkedList *interList = createList(NULL); // use getLength from linkedlist
-
-	while(list2!=NULL)
-	{
-		int data = list2->data;
-		if(h->isPresent(data))
-			pushToLinkList(&interList,data);
-		list2=list2->next;
-	}
-	printList(&interList);
-	*/
-	LinkedList interList(0);
-	int cnt = head2->length();
-	while (cnt)
+	LinkedList interList;
+	unsigned int cnt = head2->length();
+	while (cnt>0)
 	{
 		int data = head2->get_node_at_loc(cnt);
 		if (h->isPresent(data))
 			interList.push(data);
 		cnt--;
 	}
+	cout << "Intersection of the lists "<<endl;
 	interList.print_list();
+	cout<<endl;
 }
 static void uiLinkedList(void)
 {
@@ -149,31 +119,26 @@ static void uiLinkedList(void)
 	// that contain union and intersection fo the elements in the
 	// given lists. Order of elements in output doesn't matter.
 	
-	//list1 = createList(10);
-	//list2 = createList(8);
-
 	HashTable h(HASHTABLE_SIZE);
-	/*
-	pushToLinkList(&list1, 15);
-	pushToLinkList(&list1, 4);
-	pushToLinkList(&list1, 20);
-
-	pushToLinkList(&list2, 4);
-	pushToLinkList(&list2, 2);
-	pushToLinkList(&list2, 10);
-	*/
+	list1.push(10);
 	list1.push(15);
 	list1.push(4);
 	list1.push(20);
 
+	list2.push(8);
 	list2.push(4);
 	list2.push(2);
 	list2.push(10);
 
 	h.hash();
-	h.setSize(4);
-	//findUnion(&list1,&list2,&h);
-	//findIntersection(&list1,&list2,&h);
+	h.setSize(10); //  set the table size more than the number of data in the table
+	cout << "List 1 : ";
+	list1.print_list();
+	cout<<endl;
+	cout << "List 2 : ";
+	list2.print_list();
+	cout<<endl;
+
 	findUnion(&list1, &list2, &h);
 	findIntersection(&list1, &list2, &h);
 
