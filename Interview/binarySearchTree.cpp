@@ -1,13 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include<iostream>
+#include <string>
 #include "binarySearchTree.hpp"
 #include "queue.hpp"
 #include "stacks.hpp"
 #include "linkedlist.hpp"
 
+#define __BINARYSEARCHTREE
+
 #define MAXROOT(x,y) ((x)>(y)?(x):(y))
 using namespace std;
+
+#if 0
 int isbst = 1;
 node *createNode(int data)
 {
@@ -342,10 +347,301 @@ void convertTreetoChildSumProp(node *rootPtr)
 
 
 }
+#else
+BinaryTree::BinaryTree()
+{
+	root = NULL;
+}
+BinaryTree::BinaryTree(int data)
+{
+	root = new NodeTree(data);
+}
+BinaryTree::~BinaryTree()
+{
+	deleteTree();
+}
+bool BinaryTree::isBST(NodeTree *node)
+{
+	// Order of traversal <left><root><right>
+	// using inorder traversal to check if tree is bst
+	//inorder traversal will give an sorted output
+	static int data = 0;
+	if (node == NULL)
+		return true;
+	if(node->left!=NULL) isBST(node->left);
+	if(data > node->data)
+		return false;
+	data = node->data;	
+	if(node->right!=NULL) isBST(node->right);
+
+}
+void BinaryTree::deleteTree()
+{
+
+}
+void BinaryTree::insert(int data)
+{
+	/*
+	insert method creates a BST and not a general binary tree.
+	*/
+	if(root == NULL)
+	{
+		root = new NodeTree(data);
+		return;
+	}
+	NodeTree *node = root;
+	
+	while(node!=NULL)
+	{
+		if(data <= node->data)
+		{
+			if(node->left!=NULL)
+				node = node->left;
+			else
+			{
+				node->left = new NodeTree(data);
+				return;
+			}
+		}
+		else
+		{
+			if(node->right!=NULL)
+				node = node->right;
+			else
+			{
+				node->right = new NodeTree(data);
+				return;
+			}
+		}
+	}
+	
+
+}
+bool BinaryTree::search(int data)
+{
+	/*
+	Idea is to use the BST property.
+	The left child always has data value less than the parent 
+	and the right child.
+	*/
+	NodeTree *node = root;
+	if (node == NULL)
+	{
+		cout << "Error: Empty tree"<<endl;
+			return false;
+	}
+	while(data != node->data && node!=NULL)
+	{
+		if(data <= node->data)
+			node = node->left;
+		else
+			node = node->right;
+	}
+	if(data == node->data)
+		return true;
+	return false;
+}
+NodeTree* BinaryTree::search_node(int data)
+{
+	/*
+	Idea is to use the BST property.
+	The left child always has data value less than the parent 
+	and the right child.
+	*/
+	NodeTree *node = root;
+	if (node == NULL)
+	{
+		cout << "Error: Empty tree"<<endl;
+			return NULL;
+	}
+	while(data != node->data && node!=NULL)
+	{
+		if(data <= node->data)
+			node = node->left;
+		else
+			node = node->right;
+	}
+	if(data == node->data)
+		return node;
+	return NULL;
+}
+int BinaryTree::max()
+{
+	/*
+	The right most child in the BST will be the 
+	max value in the tree -- property of BST
+	*/
+	NodeTree *node = root;
+
+	if(node == NULL)
+		return -1;
+	while(node->right!=NULL)
+	{
+		node = node->right;
+	}
+	cout << "Max value in the tree ="<<node->data<<endl;
+	return node->data;
+}
+int BinaryTree::min()
+{
+	/*
+	The right most child in the BST will be the 
+	max value in the tree -- property of BST
+	*/
+	NodeTree *node = root;
+
+	if(node == NULL)
+		return -1;
+	while(node->left!=NULL)
+	{
+		node = node->left;
+	}
+	cout << "Min value in the tree ="<<node->data<<endl;
+	return node->data;
+}
+NodeTree* BinaryTree::max_node()
+{
+	/*
+	The right most child in the BST will be the 
+	max value in the tree -- property of BST
+	*/
+	NodeTree *node = root;
+
+	if(node == NULL)
+		return NULL;
+	while(node->right!=NULL)
+	{
+		node = node->right;
+	}
+	return node;
+}
+NodeTree* BinaryTree::min_node()
+{
+	/*
+	The right most child in the BST will be the 
+	max value in the tree -- property of BST
+	*/
+	NodeTree *node = root;
+
+	if(node == NULL)
+		return NULL;
+	while(node->left!=NULL)
+	{
+		node = node->left;
+	}
+	return node;
+}
+int BinaryTree::height(NodeTree *node)
+{
+	if (node == NULL)	return -1;
+	return std::max(height(node->left),height(node->right))+1;
+}
+void BinaryTree::get_height()
+{
+	cout << "Height of tree = "<<height(root)<<endl;
+}
+void BinaryTree::preorder(NodeTree* node)
+{
+	if (node == NULL) return;
+	cout << node->data<< " ";
+	preorder(node->left);
+	preorder(node->right);
+}
+void BinaryTree::inorder(NodeTree* node)
+{
+	if (node == NULL) return;
+	
+	inorder(node->left);
+	cout << node->data<< " ";
+	inorder(node->right);
+}
+void BinaryTree::postorder(NodeTree* node)
+{
+	if (node == NULL) return;
+	
+	postorder(node->left);
+	postorder(node->right);
+	cout << node->data << " ";
+}
+void BinaryTree::get_dfs_travel(char *order)
+{
+	if(order == "preorder")
+	{
+		cout<<endl;
+		cout << "Pre-order :";
+		preorder(root);
+		cout<<endl;
+	}
+	if(order == "inorder")
+	{
+		cout<<endl;
+		cout << "In-order :";
+		inorder(root);
+		cout<<endl;
+	}
+
+	if(order == "postorder")
+	{
+		cout<<endl;
+		cout << "Post-order :";		
+		postorder(root);
+		cout<<endl;
+	}
+
+}
+void BinaryTree::check_bst()
+{
+	cout<<endl;
+	if(isBST(root)){
+		cout << "Tree is BST"<<endl;
+		return;
+	}
+	
+	cout << "Not BST"<<endl;
+}
+void BinaryTree::bfs_travel()
+{
+	if(root == NULL) return;
+	NodeTree *node = root;
+	Queue q(100);
+	q.enqueue((int)node);
+	while(!q.isEmpty())
+	{
+		NodeTree *node = (NodeTree*) q.dequeue();
+		cout << node->data << " ";
+		if(node->left!=NULL) q.enqueue((int)(node->left));
+		if(node->right!=NULL) q.enqueue((int)(node->right));
+	}
+
+
+}
+static void print_root_leaf(NodeTree *node, LinkedList *list)
+{
+	
+	if(node == NULL) return;
+	NodeTree * left = node->getLeft();
+	NodeTree * right = node->getRight();
+
+	if(left == NULL && right == NULL)
+	{
+		list->push(node->getData());
+		list->print_list();
+		list->pop();
+	}
+	else
+	{
+		list->push(node->getData());
+		if( left!=NULL) print_root_leaf(left,list);
+		if( right!=NULL) print_root_leaf(right,list);
+		list->pop();
+	}
+}
+#endif
+
 void runBinaryTree(void)
 {
-	node *root;
-	root = NULL;
+	//node *root;
+	//root = NULL;
 	//                                          6  
 	//                                         / \
 	//                                        /   \
@@ -364,6 +660,7 @@ void runBinaryTree(void)
 	//                                                        
 	//
 	
+	/*
 	insertNode(&root, 6);
 	insertNode(&root, 4);
 	insertNode(&root, 10);
@@ -377,11 +674,23 @@ void runBinaryTree(void)
 	insertNode(&root, 8);
 	breathFirstSeachTravel(&root);
 	cout<<endl;
+	*/
 	
+	BinaryTree tree;	
+	LinkedList list;
+	tree.insert(6);
+	tree.insert(4);
+	tree.insert(10);
+	tree.insert(2);
+	tree.insert(5);
+	tree.insert(7);
+	tree.insert(11);
+	tree.insert(1);
+	tree.insert(3);
+	tree.insert(9);
+	tree.insert(8);
 	
-	
-
-	
+	print_root_leaf(tree.get_root(),&list);	
 }
 
 
