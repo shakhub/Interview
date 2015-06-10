@@ -56,8 +56,10 @@ public:
 	BinaryTree(int value);
 	~BinaryTree();
 
+	bool leaf(NodeTree *node){return (node->left==NULL && node->right==NULL);}
 	NodeTree* get_root(){return root;}
 	void insert(int data);
+	int delete_node(int data);
 	void deleteTree();
 	bool search(int data); // search tree (bst)
 	NodeTree *search_node(int data); // search with return node
@@ -68,6 +70,7 @@ public:
 	
 	void get_height();
 	void get_dfs_travel(char *order);
+	NodeTree* get_inorder_successor(int data);
 	void bfs_travel();
 	
 	

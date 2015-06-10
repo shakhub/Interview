@@ -417,6 +417,85 @@ void BinaryTree::insert(int data)
 	
 
 }
+NodeTree* BinaryTree::get_inorder_successor(int data)
+{
+	NodeTree *curr = search_node(data);
+
+	if (curr == NULL) return NULL;
+	if (data == max())
+	{
+		cout << "No successor for this node : Max node in tree"<<endl;
+		return curr;
+	}
+	//case 1: node has right sub tree
+	if(curr->right != NULL)
+	{
+		//find the max node in the right sub tree, which will be the 
+		// inorder successor
+		NodeTree * temp = curr->right;
+		while(temp->left!=NULL)
+			temp = temp->left;
+		return temp;
+	}
+	//case 2: node has no right sub tree
+	if (curr->right == NULL)
+	{
+		//Find the nearest parent, of whose the given node
+		// is in its left sub tree.
+		NodeTree *parent = root;
+		NodeTree *successor = NULL;
+
+		while(parent!=curr)
+		{
+			if(data < parent->data)
+			{
+				successor = parent;
+				parent = parent->left;
+			}
+			else
+			{
+				parent = parent ->right;
+			}
+		}
+		return successor;
+	}
+}
+/*
+int BinaryTree::delete_node(int data)
+{
+	
+	3 cases arise when deleting a node :
+	  1. has no child   - simply delete the node 
+	  2. has 1 child    - replace the current node with the child and delete the node
+	  3. has 2 children - find the inorder successor and replace it. Delete the node
+	
+	NodeTree * curr = search_node(data);
+	int ret;
+	//has no child
+	if(leaf(curr))
+	{
+		ret = curr->data;
+		delete curr;
+		curr = NULL;
+		return ret;
+	}
+	//has one child
+	if(curr->left == NULL)
+	{
+		ret = curr->right->data;
+		delete curr;
+		return ret;
+	}
+	if(curr->right == NULL)
+	{
+		ret = curr->left->data;
+		delete curr;
+		return ret;
+	}
+	//has both children
+
+}
+*/
 bool BinaryTree::search(int data)
 {
 	/*
@@ -518,8 +597,8 @@ NodeTree* BinaryTree::max_node()
 NodeTree* BinaryTree::min_node()
 {
 	/*
-	The right most child in the BST will be the 
-	max value in the tree -- property of BST
+	The left most child in the BST/subtree will be the 
+	min value in the tree/subtree -- property of BST
 	*/
 	NodeTree *node = root;
 
@@ -677,7 +756,7 @@ void runBinaryTree(void)
 	*/
 	
 	BinaryTree tree;	
-	LinkedList list;
+	
 	tree.insert(6);
 	tree.insert(4);
 	tree.insert(10);
@@ -689,8 +768,9 @@ void runBinaryTree(void)
 	tree.insert(3);
 	tree.insert(9);
 	tree.insert(8);
+	tree.delete_node(3);
+	tree.get_dfs_travel("inorder");
 	
-	print_root_leaf(tree.get_root(),&list);	
 }
 
 
