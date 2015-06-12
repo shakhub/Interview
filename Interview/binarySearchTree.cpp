@@ -356,10 +356,12 @@ BinaryTree::BinaryTree(int data)
 {
 	root = new NodeTree(data);
 }
+/*
 BinaryTree::~BinaryTree()
 {
 	deleteTree();
 }
+*/
 bool BinaryTree::isBST(NodeTree *node)
 {
 	// Order of traversal <left><root><right>
@@ -375,10 +377,12 @@ bool BinaryTree::isBST(NodeTree *node)
 	if(node->right!=NULL) isBST(node->right);
 
 }
+/*
 void BinaryTree::deleteTree()
 {
 
 }
+*/
 void BinaryTree::insert(int data)
 {
 	/*
@@ -459,6 +463,7 @@ NodeTree* BinaryTree::get_inorder_successor(int data)
 		}
 		return successor;
 	}
+	return NULL;
 }
 /*
 int BinaryTree::delete_node(int data)
@@ -679,10 +684,10 @@ void BinaryTree::check_bst()
 	cout << "Not BST"<<endl;
 }
 void BinaryTree::bfs_travel()
-{
+{	
 	if(root == NULL) return;
 	NodeTree *node = root;
-	Queue q(100);
+	Queue<int> q(100);
 	q.enqueue((int)node);
 	while(!q.isEmpty())
 	{
@@ -692,11 +697,9 @@ void BinaryTree::bfs_travel()
 		if(node->right!=NULL) q.enqueue((int)(node->right));
 	}
 
-
 }
 static void print_root_leaf(NodeTree *node, LinkedList *list)
-{
-	
+{	
 	if(node == NULL) return;
 	NodeTree * left = node->getLeft();
 	NodeTree * right = node->getRight();
@@ -768,8 +771,8 @@ void runBinaryTree(void)
 	tree.insert(3);
 	tree.insert(9);
 	tree.insert(8);
-	tree.delete_node(3);
-	tree.get_dfs_travel("inorder");
+	//tree.delete_node(3);
+	tree.bfs_travel();
 	
 }
 

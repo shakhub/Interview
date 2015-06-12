@@ -54,13 +54,13 @@ private:
 public:
 	BinaryTree();
 	BinaryTree(int value);
-	~BinaryTree();
+	//~BinaryTree();
 
 	bool leaf(NodeTree *node){return (node->left==NULL && node->right==NULL);}
 	NodeTree* get_root(){return root;}
 	void insert(int data);
-	int delete_node(int data);
-	void deleteTree();
+	//int delete_node(int data);
+	//void deleteTree();
 	bool search(int data); // search tree (bst)
 	NodeTree *search_node(int data); // search with return node
 	int max();
