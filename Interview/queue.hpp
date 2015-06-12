@@ -1,35 +1,12 @@
+#ifndef __QUEUE_H
+#define __QUEUE_H
+
+
 //error codes
 #define ERROR_QUEUE_EMPTY -1
 #define ERROR_QUEUE_FULL -2
-#if 0
-typedef struct Queue
-{
-	int front, rear, size, capacity;
-	int *array;
-}Queue;
 
-typedef struct Qnode
-{
-	int data;
-	struct Qnode *next;
-}Qnode;
-typedef struct QueueLL
-{
-	Qnode *front, *rear;
-}QueueLL;
-
-Queue *createQueue(int capacity);
-int isEmptyQueue(Queue *);
-int isFullQueue(Queue *);
-void enqueue(Queue *, int);
-void insertFrontQueue(Queue *, int );
-int dequeue(Queue *);
-int removeRearQueue(Queue *);
-Qnode *createQNode(int);
-QueueLL *createQueueLL(void);
-void enqueueLL(QueueLL *, int);
-Qnode *dequeueLL(QueueLL *);
-#else
+template <class T>
 class Queue
 {
 private:
@@ -37,18 +14,73 @@ private:
 	int rear;
 	int size;
 	int capacity;
-	int *array;
+	T *array;
 public:
-	Queue();
-	Queue(int capacity);
-	~Queue();
+	Queue() 
+	{
+		front = rear =-1;
+		size = 0;
+		capacity = 0;
+
+	};
+	Queue(int capacity) 
+	{
+		front = rear =-1;
+		size = 0;
+		this->capacity = capacity;
+		array = new T[capacity];
+	};
+	~Queue()
+	{
+		front = rear = 0;
+		size = 0;
+		capacity = 0;
+		delete[] array;
+	};
 	bool isEmpty(){return size == 0;};
 	bool isFull(){return size == capacity;};
-	void enqueue(int data);
-	void append(int data);// add at the front
-	int dequeue();
-	int dequeue_rear();
+	void enqueue(T const &data)
+	{
+		if(isFull()) return;		
+		front = (front==-1)? 0 : front; 
+		rear = (rear+1)%capacity;
+		size++;
+		array[rear] = data;
+	};
+	void append(T const &data)// add at the front
+	{
+		if(isFull()) return;
+
+		front = (front==-1)? 0 : front;
+		front = front>0? front-1:capacity-front-1; 
+		size++;
+		array[front] = data;
+	};
+
+	T dequeue()
+	{
+		T data;
+		if(isEmpty())	return ERROR_QUEUE_EMPTY;
+		size--;
+		data = array[front];
+		front = (front+1)%capacity;
+		return data;
+	};
+	T dequeue_rear()
+	{
+		T data;
+		if(isEmpty())	return ERROR_QUEUE_EMPTY;
+		size--;
+		data = array[rear];
+		rear = (rear-1)%capacity;
+		return data;
+	};
 	void print();
 };
-#endif
+#ifdef __QUEUE
+
+#else
 void runQueue(void);
+#endif
+
+#endif //__QUEUE_H
