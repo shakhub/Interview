@@ -698,7 +698,7 @@ void BinaryTree::bfs_travel()
 	}
 
 }
-static void print_root_leaf(NodeTree *node, LinkedList *list)
+static void print_root_leaf(NodeTree *node, LinkedList<int> *list)
 {	
 	if(node == NULL) return;
 	NodeTree * left = node->getLeft();

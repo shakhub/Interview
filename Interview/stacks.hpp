@@ -49,6 +49,11 @@ public:
 		if(isEmpty()) return ERROR_STACK_EMPTY;
 		return array[top--];
 	};
+	T topofstack()
+	{
+		if(isEmpty()) return ERROR_STACK_EMPTY;
+		return array[top];
+	};
 	void reverse()
 	{
 		T temp;

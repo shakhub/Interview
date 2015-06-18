@@ -4,23 +4,22 @@
 #include"queue.hpp"
 
 #define __QUEUE
-using namespace std;
 
 template <class T>
 void Queue<T>::print()
 {
 	if(isEmpty())
 	{
-		cout << "Error: Queue is empty."<<endl;
+		std::cout << "Error: Queue is empty."<<std::endl;
 		return ;
 	}
-	cout<< "Queue :";
+	std::cout<< "Queue :";
 	for(int i = 0;i<size;i++)
 	{
 
-		cout << array[(i+front)%capacity]<< " " ;
+		std::cout << array[(i+front)%capacity]<< " " ;
 	}
-	cout<<endl;
+	std::cout<<std::endl;
 }
 
 void runQueue(void)
@@ -36,7 +35,7 @@ void runQueue(void)
 	q.print();
 	q.append(45);
 	q.print();
-	cout << q.dequeue()<<endl;
+	std::cout << q.dequeue()<<std::endl;
 	q.print();
 
 }

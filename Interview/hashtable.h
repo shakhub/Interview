@@ -9,7 +9,7 @@ class HashTable{
 public:
 	HashTable(int arrSize);//constructor
 	~HashTable();
-	void hash(LinkedList *);
+	void hash(LinkedList<int> *);
 	void hash(int *array,int size);//hasing function	
 	void setSize(int arrSize){size = arrSize;}
 	int getSize(){return size;}

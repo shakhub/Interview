@@ -4,20 +4,20 @@
 #include "stacks.hpp"
 
 #define __STACKS
-using namespace std;
+
 
 template <class T>
 void Stack<T>::print()
 {
 	if(isEmpty())
 	{
-		cout << " Error : Stack is empty.Nothing to print"<<endl;
+		std::cout << " Error : Stack is empty.Nothing to print"<<std::endl;
 		return ;
 	}
-	cout << "Stack :";
+	std::cout << "Stack :";
 	for(int i=0;i<=top;i++)
-		cout<< array[i] <<" ";
-	cout<<endl;
+		std::cout<< array[i] <<" ";
+	std::cout<<std::endl;
 }
 
 //main calling function
@@ -30,8 +30,7 @@ void runStack(void)
 	s.push(78.23);
 	s.push(34.5);
 	s.print();
-	s.pop();
-	s.print();
-	s.reverse();
+	
+	std::cout<<s.topofstack()<<std::endl;
 	s.print();
 }

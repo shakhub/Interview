@@ -40,7 +40,7 @@ void HashTable::hash(int *array,int size)
 	}
 
 }
-void HashTable::hash(LinkedList *list1)
+void HashTable::hash(LinkedList<int> *list1)
 {
 	int cnt = list1->length();
 	while(cnt)
@@ -84,10 +84,10 @@ void subsetArray(void)
 	else
 		cout<<"Not a subset"<<endl;
 }
-static void findUnion(LinkedList *head1,LinkedList *head2,HashTable *h)
+static void findUnion(LinkedList<int> *head1,LinkedList<int> *head2,HashTable *h)
 {
 	unsigned int cnt1 = head1->length(), cnt2 = head2->length();
-	LinkedList unionList; // use getLength from linkedlist
+	LinkedList<int> unionList; // use getLength from linkedlist
 
 	while (cnt1>0){
 		unionList.push_at_tail(head1->get_node_at_loc(cnt1));
@@ -104,9 +104,9 @@ static void findUnion(LinkedList *head1,LinkedList *head2,HashTable *h)
 	unionList.print_list();
 	cout<<endl;
 }
-static void findIntersection(LinkedList *head1,LinkedList *head2,HashTable *h)
+static void findIntersection(LinkedList<int> *head1,LinkedList<int> *head2,HashTable *h)
 {
-	LinkedList interList;
+	LinkedList<int> interList;
 	unsigned int cnt = head2->length();
 	while (cnt>0)
 	{
@@ -124,8 +124,8 @@ static void uiLinkedList(void)
 	//Given two linked lists, create union and intersection lists
 	// that contain union and intersection fo the elements in the
 	// given lists. Order of elements in output doesn't matter.
-	LinkedList list1;
-	LinkedList list2;
+	LinkedList<int> list1;
+	LinkedList<int> list2;
 	HashTable h(HASHTABLE_SIZE);
 	list1.push(10);
 	list1.push(15);

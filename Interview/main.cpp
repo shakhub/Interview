@@ -4,6 +4,7 @@ Created on : April 15, 2015
 */
 #include<stdio.h>
 #include<stdlib.h>
+#include"graph.hpp"
 #include"binarySearchTree.hpp"
 #include"binaryheap.hpp"
 #include"hashtable.h"
@@ -11,16 +12,18 @@ Created on : April 15, 2015
 #include"queue.hpp"
 #include"stacks.hpp"
 
+
 int main(int argc, char*argv[])
 {
 	/*All the main function are called here and the results displayed*/
 	//runStack();
 	//runAmazonInterview();
-	//runqueue();
+	//runQueue();
 	//runBinaryTree(); // binary search tree
 	//runLinkedList();
 	//runBinaryHeap();
-	runHashFunct();
+	//runHashFunct();
+	runGraph();
 	printf("\n");
 	system("PAUSE");
 }
