@@ -1,37 +1,45 @@
 #ifndef __LINKEDLIST_H
 #define __LINKEDLIST_H
 
+//forward declaration
+template<class T> class LinkedList;
+
+template <class T>
 class Node
 {
-	friend class LinkedList;
+	friend class LinkedList<T>;
 private:
-	int data;
-	Node *next;
+	T data;
+	Node<T> *next;
 public:
 	//constructor
-	Node(void)
+	Node<T>(void)
 		:next(NULL)
 	{}
 	//constructor with argument
-	Node(int value)
+	Node<T>(T value)
 		:next(NULL),data(value)
 	{}
-	Node(int value,Node *next)
+	Node<T>(T value,Node *next)
 		:next(next),data(value)
 	{}
-	int getData(void) { return data;}		
-	Node* getNext(void) { return next;}		
+	T getData(void) { return data;}		
+	Node<T>* getNext(void) { return next;}		
 };
 
+template <class T>
 class LinkedList
 {
 private:
-	Node *head;
-	Node *tail;
+	Node<T> *head;
+	Node<T> *tail;
 public:
-	LinkedList (void); //constructor
-	LinkedList (int value);//constructor
+	LinkedList (); //constructor
+	LinkedList (T value);//constructor
 	~LinkedList(void);//distructor
+
+	Node<T> * gethead(void) {return head;}
+
 	bool isEmpty()
 	{
 		if(head == NULL) 
@@ -41,20 +49,23 @@ public:
 		return false;
 	}
 	unsigned int length();
-	int search(int value); // returns the location of the value if found
+	T search(T value); // returns the location of the value if found
 	void deleteList();
-	void push(int value);
-	void push(Node *node,int value);// push after given node
-	void push_at_tail(int value);
-	int pop();
-	int pop_tail();
-	int get_node_at_loc(unsigned int location);
-	void delete_node(int value);
+	void push(T value);
+	void push(T value,Node<T> *node);// push after given node
+	void push_at_tail(T value);
+	T pop();
+	T pop_tail();
+	T get_node_at_loc(unsigned int location);
+	void delete_node(T value);
 	void rotate_list(int k);
 	void print_list();
 
 	void reverse();// reverse the linked list
 
 };
+
 void runLinkedList(void);
+void tempFunct();
+
 #endif// __LINKEDLIST_H

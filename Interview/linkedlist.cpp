@@ -2,28 +2,39 @@
 #include<stdio.h>
 #include<iostream>
 #include"linkedlist.hpp"
-using namespace std;
 
-LinkedList::LinkedList()
+#define __LINKEDLIST
+
+//explicit instantiation 
+template class	LinkedList<int> ;
+template class	LinkedList<char> ;
+template class  LinkedList<double>;
+
+template <class T>
+LinkedList<T>::LinkedList()
 {
 	//constructor
 	head = tail = NULL;
 }
-LinkedList::LinkedList(int value)
+template <class T>
+LinkedList<T>::LinkedList(T value)
 {
 	//constructor
-	head = new Node(value);
+	head = new Node<T>(value);
 	tail = head;
 }
-LinkedList::~LinkedList()
+template <class T>
+LinkedList<T>::~LinkedList()
 {
 	deleteList();
 }
-void LinkedList::deleteList()
+template <class T>
+void LinkedList<T>::deleteList()
 {
-	if(isEmpty()) {cout<< "Empty list: Nothing to delete"<<endl; return;}
-	Node *curr = head;
-	Node *temp;
+	if(isEmpty()) {/*cout<< "Empty list: Nothing to delete"<<endl;*/ return;}
+	Node<T> *curr ;
+	curr = head;//= head;
+	Node<T> *temp;
 
 	while(curr!=NULL)
 	{
@@ -34,43 +45,46 @@ void LinkedList::deleteList()
 	head = tail = NULL;
 	//cout << "List deleted"<<endl;
 }
-void LinkedList::push(int value)
+template <class T>
+void LinkedList<T>::push(T value)
 {
 	//add a node to the head of a linked list
 	if (head == NULL)
 	{
-		tail = head = new Node(value);
+		tail = head = new Node<T>(value);
 		return;
 	}
 
-	Node * newNode = new Node(value);
+	Node<T> * newNode = new Node<T>(value);
 	newNode->next = head;
 	head = newNode; //update the head node
-
 }
-void LinkedList::push(Node *node,int value)
+template <class T>
+void LinkedList<T>::push(T value,Node<T> *node)
 {
 	//push after given node with the given data
 	if(node!=NULL)
-		node->next = new Node(value,node->next);
-
+		node->next = new Node<T>(value,node->next);
 }
-void LinkedList::push_at_tail(int value)
+template <class T>
+void LinkedList<T>::push_at_tail(T value)
 {
 	if(head == NULL)
 	{
-		tail = head = new Node(value);
+		tail = head = new Node<T>(value);
 		return;
 	}
 
-	tail->next = new Node(value);
+	tail->next = new Node<T>(value);
 	tail = tail->next;
-	
+
 }
-unsigned int LinkedList::length()
+template <class T>
+unsigned int LinkedList<T>::length()
 {
-	if(isEmpty()) {cout << " Empty list "<<endl;return 0;}
-	Node *curr = head;
+	if(isEmpty()) {std::cout << " Empty list "<<std::endl;return 0;}
+	Node<T> *curr;
+	curr = head;//= head;
 	unsigned int len=0;
 	while(curr!= NULL)
 	{
@@ -80,48 +94,51 @@ unsigned int LinkedList::length()
 	//cout << "Length of list : "<<len<<endl;
 	return len;
 }
-int LinkedList::search(int value)
+template <class T>
+T LinkedList<T>::search(T value)
 {
-	if(isEmpty()){cout << " Empty list "<<endl; return -1;}
-	Node *curr = head;
+	if(isEmpty()){std::cout << " Empty list "<<std::endl; return -1;}
+	Node<T> *curr = head;
 	int loc=1;
 	while(curr!=NULL)
 	{
 		if(curr->data == value)
 		{
-			cout<< "Data "<<value<<" found at location :"<<loc<<endl;
+			std::cout<< "Data "<<value<<" found at location :"<<loc<<std::endl;
 			return loc;
 		}
 		loc++;
 		curr = curr->next;
 	}
-	cout<< "Data "<< value<<" not found in the list"<<endl;
+	std::cout<< "Data "<< value<<" not found in the list"<<std::endl;
 	return -1;
 
 }
-int LinkedList::pop()
+template <class T>
+T LinkedList<T>::pop()
 {
 	//removes node at the head;
-	int data;
-	if(isEmpty()){cout << "Cannot pop : Empty list"<<endl; return -1;}
-	
+	T data;
+	if(isEmpty()){std::cout << "Cannot pop : Empty list"<<std::endl; return -1;}
+
 	if(tail == head) // only one node in the list
 	{
 
 	}
-	Node *temp = head;
+	Node<T> *temp = head;
 	data = temp->data;
 	head = head->next;
 	delete temp;
 	return data;
 
 }
-int LinkedList::pop_tail()
+template <class T>
+T LinkedList<T>::pop_tail()
 {
 	//removes node at the tail;
-	Node *prev=NULL,*curr=NULL;
-	int data;
-	if(isEmpty()){cout << "Cannot pop : Empty list"<<endl; return -1;}
+	Node<T> *prev=NULL,*curr=NULL;
+	T data;
+	if(isEmpty()){std::cout << "Cannot pop : Empty list"<<std::endl; return -1;}
 	if(tail == head) // only one node in the list
 	{
 
@@ -138,18 +155,19 @@ int LinkedList::pop_tail()
 	delete curr;
 	return data;
 }
-int LinkedList::get_node_at_loc(unsigned int idx)
+template <class T>
+T LinkedList<T>::get_node_at_loc(unsigned int idx)
 {
 	// gets the data stored at location idx from the head
-	if(isEmpty()){cout << "Empty list: Nothing to get."<<endl; return -1;}
-	
+	if(isEmpty()){std::cout << "Empty list: Nothing to get."<<std::endl; return -1;}
+
 	if(idx > length())
 	{
-		cout<<"Invalid index: List is smaller than the index"<<endl;
+		std::cout<<"Invalid index: List is smaller than the index"<<std::endl;
 		return -1;
 	}
 
-	Node *curr = head;
+	Node<T> *curr = head;
 	int count=1;
 	while(count!=idx && curr!=NULL)
 	{
@@ -160,13 +178,14 @@ int LinkedList::get_node_at_loc(unsigned int idx)
 	{
 		return -1;
 	}
-	
+
 	//cout << "Data at location "<<idx<<": "<<curr->data<<endl;
 	return curr->data;
 }
-void LinkedList::delete_node(int value)
+template <class T>
+void LinkedList<T>::delete_node(T value)
 {
-	Node *prev=NULL,*temp=NULL;
+	Node<T> *prev=NULL,*temp=NULL;
 	if(head->data == value)
 	{
 		temp = head;
@@ -193,26 +212,28 @@ void LinkedList::delete_node(int value)
 	}
 
 }
-void LinkedList::print_list()
+template <class T>
+void LinkedList<T>::print_list()
 {
-	Node *curr = head;
+	Node<T> *curr = head;
 
-	if(isEmpty()){cout << "Empty list"<<endl; return;}
+	if(isEmpty()){std::cout << "Empty list"<<std::endl; return;}
 	while(curr!=NULL)
 	{
-		cout<< curr->data<<" ";
+		std::cout<< curr->data<<" ";
 		curr=curr->next;
 	}
-	cout<<endl;
+	std::cout<<std::endl;
 }
-void LinkedList::reverse()
+template <class T>
+void LinkedList<T>::reverse()
 {
 	if(head == NULL)
 	{
-		cout << "Empty list : Cannot reverse"<<endl;
+		std::cout << "Empty list : Cannot reverse"<<std::endl;
 		return;
 	}
-	Node *curr,*next,*prev = NULL;
+	Node<T> *curr,*next,*prev = NULL;
 
 	curr = head;
 	tail = curr;
@@ -226,52 +247,59 @@ void LinkedList::reverse()
 	}
 	head = prev;
 	tail->next = NULL; //  not necessary just for safety
-	cout << "Reverse list " << endl;
+	std::cout << "Reverse list " << std::endl;
 
 }
-void LinkedList::rotate_list(int k)
+template <class T>
+void LinkedList<T>::rotate_list(int k)
 {
 	/*
 	Rotate the link list counter-clock wise by k times.
 	Eg: 10->4->34->5->36->9 rotated by 3 should be
-	    5->36->9->10->4->34
-		For this we need to store (k+1)th node, last node and kth node
+	5->36->9->10->4->34
+	For this we need to store (k+1)th node, last node and kth node
 	*/
-	if (isEmpty()) { cout << "Empty list: Nothing to rotate" << endl; return; }
+	if (isEmpty()) { std::cout << "Empty list: Nothing to rotate" << std::endl; return; }
 	k %= length(); // make sure that k is less than the length of the list
 	int count = 1;
-	Node *curr = head;
-	
+	Node<T> *curr = head;
+
 	while (count != k && curr!=NULL)
 	{
 		count++;
 		curr = curr->next;
 	}
-	
+
 
 	tail->next = head;
 	head = curr->next;
 	tail = curr;
 	tail->next = NULL;
 
-	cout << "List rotate counter-clock wise by " << k << endl;
-	
+	std::cout << "List rotate counter-clock wise by " << k << std::endl;
+
 }
+
+
+
+
+
 void runLinkedList()
 {
-	//LinkedList list(24);
-	LinkedList list;
-	list.push(9);
-	list.push(36);
-	list.push(5);
-	list.push(34);
-	list.push(4);
-	list.push(10);
+
+	LinkedList<char> list;
+	list.push('A');
+	list.push('B');
+	list.push('C');
+	list.push('D');
+	list.push('E');
+	list.push('F');
 
 	list.print_list();	
 	list.rotate_list(10);
 	list.print_list();
 	list.reverse();
 	list.print_list();
-	
+
+
 }
