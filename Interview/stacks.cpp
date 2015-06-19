@@ -5,6 +5,10 @@
 
 #define __STACKS
 
+//explicit instantiation 
+template class Stack<int>;
+template class Stack<double>;
+template class Stack<char>;
 
 template <class T>
 void Stack<T>::print()
@@ -14,10 +18,11 @@ void Stack<T>::print()
 		std::cout << " Error : Stack is empty.Nothing to print"<<std::endl;
 		return ;
 	}
-	std::cout << "Stack :";
+	std::cout<<std::endl;
+	//std::cout << "Stack :";
 	for(int i=0;i<=top;i++)
 		std::cout<< array[i] <<" ";
-	std::cout<<std::endl;
+	//std::cout<<std::endl;
 }
 
 //main calling function
