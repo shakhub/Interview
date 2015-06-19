@@ -23,7 +23,7 @@ public:
 		capacity = 0;
 
 	};
-	Queue(int capacity) 
+	Queue(const int capacity) 
 	{
 		front = rear =-1;
 		size = 0;

@@ -17,7 +17,7 @@ LinkedList<T>::LinkedList()
 	head = tail = NULL;
 }
 template <class T>
-LinkedList<T>::LinkedList(T value)
+LinkedList<T>::LinkedList(const T value)
 {
 	//constructor
 	head = new Node<T>(value);
@@ -46,7 +46,7 @@ void LinkedList<T>::deleteList()
 	//cout << "List deleted"<<endl;
 }
 template <class T>
-void LinkedList<T>::push(T value)
+void LinkedList<T>::push(const T value)
 {
 	//add a node to the head of a linked list
 	if (head == NULL)
@@ -60,14 +60,14 @@ void LinkedList<T>::push(T value)
 	head = newNode; //update the head node
 }
 template <class T>
-void LinkedList<T>::push(T value,Node<T> *node)
+void LinkedList<T>::push(const T value,Node<T> *node)
 {
 	//push after given node with the given data
 	if(node!=NULL)
 		node->next = new Node<T>(value,node->next);
 }
 template <class T>
-void LinkedList<T>::push_at_tail(T value)
+void LinkedList<T>::push_at_tail(const T value)
 {
 	if(head == NULL)
 	{
@@ -95,7 +95,7 @@ unsigned int LinkedList<T>::length()
 	return len;
 }
 template <class T>
-T LinkedList<T>::search(T value)
+T LinkedList<T>::search(const T value)
 {
 	if(isEmpty()){std::cout << " Empty list "<<std::endl; return -1;}
 	Node<T> *curr = head;
@@ -156,7 +156,7 @@ T LinkedList<T>::pop_tail()
 	return data;
 }
 template <class T>
-T LinkedList<T>::get_node_at_loc(unsigned int idx)
+T LinkedList<T>::get_node_at_loc(const unsigned int idx)
 {
 	// gets the data stored at location idx from the head
 	if(isEmpty()){std::cout << "Empty list: Nothing to get."<<std::endl; return -1;}
@@ -183,7 +183,7 @@ T LinkedList<T>::get_node_at_loc(unsigned int idx)
 	return curr->data;
 }
 template <class T>
-void LinkedList<T>::delete_node(T value)
+void LinkedList<T>::delete_node(const T value)
 {
 	Node<T> *prev=NULL,*temp=NULL;
 	if(head->data == value)

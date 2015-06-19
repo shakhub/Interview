@@ -18,7 +18,7 @@ public:
 		capacity = 0;
 		top = -1;
 	};// default constructor;
-	Stack(int capacity)// constructor with capacity
+	Stack(const int capacity)// constructor with capacity
 	{
 		this->capacity = capacity;
 		top = -1;
@@ -27,12 +27,12 @@ public:
 	~Stack() {delete[] array;};//destructor
 	bool isEmpty(){return top==-1;};
 	bool isFull(){return top==capacity-1;};
-	void push(T data) // insert at top 
+	void push(const T data) // insert at top 
 	{
 		if(isFull()) return;
 		array[++top] = data;
 	};
-	void append(T data) // insert at bottom 
+	void append(const T data) // insert at bottom 
 	{
 		T temp;
 		if(isEmpty())

@@ -17,15 +17,15 @@ public:
 		:next(NULL)
 	{}
 	//constructor with argument
-	Node<T>(T value)
+	Node<T>(const T value)
 		:next(NULL),data(value)
 	{}
-	Node<T>(T value,Node *next)
+	Node<T>(const T value,Node *next)
 		:next(next),data(value)
 	{}
 	T getData(void) { return data;}		
 	Node<T>* getNext(void) { return next;}	
-	void setData(T value) {data = value;}
+	void setData(const T value) {data = value;}
 };
 
 template <class T>
@@ -50,15 +50,15 @@ public:
 		return false;
 	}
 	unsigned int length();
-	T search(T value); // returns the location of the value if found
+	T search(const T value); // returns the location of the value if found
 	void deleteList();
-	void push(T value);
-	void push(T value,Node<T> *node);// push after given node
-	void push_at_tail(T value);
+	void push(const T value);
+	void push(const T value,Node<T> *node);// push after given node
+	void push_at_tail(const T value);
 	T pop();
 	T pop_tail();
-	T get_node_at_loc(unsigned int location);
-	void delete_node(T value);
+	T get_node_at_loc(const unsigned int location);
+	void delete_node(const T value);
 	void rotate_list(int k);
 	void sort();
 	void print_list();
