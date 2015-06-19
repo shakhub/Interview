@@ -23,8 +23,8 @@ public:
 	Node<T>(const T value,Node *next)
 		:next(next),data(value)
 	{}
-	T getData(void) { return data;}		
-	Node<T>* getNext(void) { return next;}	
+	T getData(void) const { return data;}		
+	Node<T>* getNext(void) const { return next;}	
 	void setData(const T value) {data = value;}
 };
 
