@@ -279,7 +279,32 @@ void LinkedList<T>::rotate_list(int k)
 	std::cout << "List rotate counter-clock wise by " << k << std::endl;
 
 }
+template <class T>
+void LinkedList<T>::sort()
+{
+	// ascending order
+	// only works for decimal and interger inputs
+	if (isEmpty()) { std::cout << "Empty list: Nothing to sort" << std::endl; return; }
 
+	Node<T> *curr = head;
+
+	while(curr!=NULL)
+	{
+		Node<T> *nxt = curr->getNext();
+
+		while(nxt!=NULL)
+		{
+			if(curr->getData() > nxt->getData())
+			{
+				T temp = curr->getData();
+				curr->setData(nxt->getData());
+				nxt->setData(temp);
+			}
+			nxt = nxt->getNext();
+		}
+		curr = curr->getNext();
+	}
+}
 
 
 
@@ -287,19 +312,17 @@ void LinkedList<T>::rotate_list(int k)
 void runLinkedList()
 {
 
-	LinkedList<char> list;
-	list.push('A');
-	list.push('B');
-	list.push('C');
-	list.push('D');
-	list.push('E');
-	list.push('F');
-
-	list.print_list();	
-	list.rotate_list(10);
-	list.print_list();
-	list.reverse();
+	LinkedList<double> list;
+	list.push(3.1);
+	list.push(9.2);
+	list.push(10.3);
+	list.push(1.3);
+	list.push(4.5);
+	list.push(34.3);
+	list.push(4534.8);
 	list.print_list();
 
+	list.sort();
+	list.print_list();
 
 }

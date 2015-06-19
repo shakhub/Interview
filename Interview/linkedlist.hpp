@@ -24,7 +24,8 @@ public:
 		:next(next),data(value)
 	{}
 	T getData(void) { return data;}		
-	Node<T>* getNext(void) { return next;}		
+	Node<T>* getNext(void) { return next;}	
+	void setData(T value) {data = value;}
 };
 
 template <class T>
@@ -59,6 +60,7 @@ public:
 	T get_node_at_loc(unsigned int location);
 	void delete_node(T value);
 	void rotate_list(int k);
+	void sort();
 	void print_list();
 
 	void reverse();// reverse the linked list
