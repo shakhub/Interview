@@ -15,16 +15,21 @@ class Graph
 public:
 	Graph(int size){ array = new LinkedList<int>[size]; this->size = size;}
 	~Graph(){delete []array;}
-	void addedge(int src,int dest) 
+	void addedge(int src,int dest)
 	{
 		array[src].push(dest);
 		array[dest].push(src); // since its an undirected graph};
+
+		array[src].sort();
+		array[dest].sort();
 	}
 	void addedge_d(int src,int dest) {array[src].push(dest);} // directed graphs
-	void dfs(int start); // vertext start point
+	void dfs(); // vertext start point
 	void dfs_util(int start,bool visited[]);
 	void bfs(int start);
-	void bfs_util(int start, bool visited[], Queue<int> *q);
+	void dfs_path(int start, int end,bool visited[],Stack<int> *list);
+	void path(int start,int end);
+	bool loop();
 	void printgraph();
 };
 
