@@ -305,24 +305,39 @@ void LinkedList<T>::sort()
 		curr = curr->getNext();
 	}
 }
+template <class T>
+T middle_of_list(LinkedList<T> *list)
+{
+	Node<T> *slow = list->gethead();
+	Node<T> *fast = list->gethead();
 
+	while(fast->getNext()!=NULL)
+	{
+		slow = slow->getNext();
+		if(fast->getNext()->getNext() == NULL)
+			break;
+		fast = fast->getNext()->getNext();
+	}
+
+	return slow->getData();
+}
 
 
 
 void runLinkedList()
 {
 
-	LinkedList<double> list;
-	list.push(3.1);
-	list.push(9.2);
-	list.push(10.3);
-	list.push(1.3);
-	list.push(4.5);
-	list.push(34.3);
-	list.push(4534.8);
+	LinkedList<int> list;
+	list.push(3);
+	list.push(9);
+	list.push(10);
+	list.push(1);
+	list.push(4);
+	list.push(34);
+	list.push(453);
+	list.print_list();
+	list.sort();	
 	list.print_list();
 
-	list.sort();
-	list.print_list();
-
+	std::cout<< "Middle of list ="<<middle_of_list(&list)<<std::endl;
 }
