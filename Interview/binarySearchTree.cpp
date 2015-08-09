@@ -618,7 +618,7 @@ NodeTree* BinaryTree::min_node()
 int BinaryTree::height(NodeTree *node)
 {
 	if (node == NULL)	return -1;
-	return std::max(height(node->left),height(node->right))+1;
+	return MAXROOT(height(node->left), height(node->right)) + 1;
 }
 void BinaryTree::get_height()
 {
