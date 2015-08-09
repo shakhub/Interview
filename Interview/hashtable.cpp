@@ -1,6 +1,6 @@
 #include<iostream>
 #include"hashtable.h"
-
+#include<vector>
 
 using namespace std;
 #define HASHTABLE
@@ -124,9 +124,27 @@ static void uiLinkedList(void)
 	//Given two linked lists, create union and intersection lists
 	// that contain union and intersection fo the elements in the
 	// given lists. Order of elements in output doesn't matter.
-	LinkedList<int> list1;
-	LinkedList<int> list2;
+	std::vector<LinkedList<int>> vecList(2);
+
+	for (unsigned int i = 0; i < 2; i++)
+	{
+		LinkedList<int> list;
+		vecList.push_back(list);
+	}
+	//LinkedList<int> list1;
+	//LinkedList<int> list2;
 	HashTable h(HASHTABLE_SIZE);
+	vecList.at(0).push(10);
+	vecList.at(0).push(15);
+	vecList.at(0).push(4);
+	vecList.at(0).push(20);
+	
+	vecList.at(1).push(8);
+	vecList.at(1).push(4);
+	vecList.at(1).push(2);
+	vecList.at(1).push(10);
+
+	/*
 	list1.push(10);
 	list1.push(15);
 	list1.push(4);
@@ -136,18 +154,23 @@ static void uiLinkedList(void)
 	list2.push(4);
 	list2.push(2);
 	list2.push(10);
-
-	h.hash(&list1);
+	*/
+	//h.hash(&list1);
+	h.hash(&vecList.at(0));
 	h.setSize(10); //  set the table size more than the number of data in the table
 	cout << "List 1 : ";
-	list1.print_list();
+	//list1.print_list();
+	vecList.at(0).print_list();
 	cout<<endl;
 	cout << "List 2 : ";
-	list2.print_list();
+	//list2.print_list();
+	vecList.at(1).print_list();
 	cout<<endl;
 
-	findUnion(&list1, &list2, &h);
-	findIntersection(&list1, &list2, &h);
+	//findUnion(&list1, &list2, &h);
+	findUnion(&vecList.at(0), &vecList.at(1), &h);
+	//findIntersection(&list1, &list2, &h);
+	findIntersection(&vecList.at(0), &vecList.at(1), &h);
 
 }
 void runHashFunct()

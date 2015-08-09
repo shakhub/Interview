@@ -11,8 +11,8 @@ public:
 	~HashTable();
 	void hash(LinkedList<int> *);
 	void hash(int *array,int size);//hasing function	
-	void setSize(int arrSize){size = arrSize;}
-	int getSize(){return size;}
+	void setSize(const int arrSize){size = arrSize;}
+	int getSize() const {return size;}
 	int hashValue(int key);
 	bool isPresent(int key);
 };
